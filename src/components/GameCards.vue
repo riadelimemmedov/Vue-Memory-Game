@@ -1,0 +1,158 @@
+<template>
+  <div class="game-area">
+    <h1 class="title">Pogaca <span>Nerede</span> <strong>?</strong> </h1>
+    <h4 class="description">
+      Acik kartlardan birini sectikden sonra,kapali olan karta tiklayiniz
+    </h4>
+    <div class="container">
+      <transition-group name="rotate-all" class="cart-container" appear>
+        <app-card
+          :key="card.id"
+          :class="{'shadow':selectedCard==card.id}"
+          @click.native="selectedCard=card.id"
+          v-for="card in cards"
+          :card="card"
+          style="margin-left: 15px">
+      </app-card>
+      </transition-group>
+    </div>
+
+    <div class="container"></div>
+        <transition name="rotate" mode="out-in">
+          <component
+            @click.native="showCard(answer)"
+            :card="answer"
+            :is="activeCard">
+      </component>
+        </transition>
+    </div>
+
+</template>
+
+<script>
+  import Card from './Card.vue';
+  import DefaultCard from './DefaultCard.vue'
+
+  export default{
+    components:{
+      'app-card':Card,
+      'app-default-card':DefaultCard,
+    },
+    data:function(){
+      return{
+        selectedCard:null,
+        answer:{},//cunki icinde atayacagim deyer objectdir altdaki card json datasindan gorunduyu kimi
+        activeCard:'app-default-card',
+        cards:[
+          {id:1,component:'app-card',image:'/src/assets/card-1.jpg'},
+          {id:2,component:'app-card',image:'/src/assets/card-2.jpg'},
+          {id:3,component:'app-card',image:'/src/assets/card-3.jpg'},
+          {id:4,component:'app-card',image:'/src/assets/card-4.jpg'},
+          {id:5,component:'app-card',image:'/src/assets/card-5.jpg'},
+        ]
+      }
+    },
+    created(){//seyfe her yenilenende created tetiklenir,window.onload kimi bir seydir => created() hooku vue js de lifecycledir yeni bir qanundur
+      let answer_question = Math.ceil(Math.random()*this.cards.length)
+      this.answer = this.cards[answer_question-1]
+      //console.log(this.answer.component)
+    },
+    methods:{
+      showCard(answer_card){
+        if(this.selectedCard == null){
+          alert('Ilk Olarak Bir Kart Seciniz')
+        }
+        else{
+          this.activeCard = answer_card.component
+          setTimeout(()=>{
+              if(answer_card.id == this.selectedCard){
+                this.$emit('activeComponentEvent','app-celebrate')
+              }
+              else{
+                this.$emit('activeComponentEvent','app-failure')
+              }
+          },1000)
+        }
+      }
+    }
+  }
+</script>
+
+<style scoped>
+
+  .title{
+    text-align: center;
+    color: rosybrown;
+  }
+  .title span{
+    color: mediumpurple;
+  }
+  .title strong{
+    color: darkred;
+  }
+  .description{
+    color: gray;
+    text-align: center;
+  }
+  .container,.cart-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+  .shadow{
+    box-shadow: 0px 5px 48px #30969f!important;
+    transition: box-shadow .5s;
+  }
+
+  /* Acik kartlarin animasyonlari icin gerekli olan transtion class tanimlari */
+  /* Vue js animtion class default */
+  .rotate-all-enter{}
+  .rotate-all-enter-active{
+    animation: rotate-all-animation ease-in-out 2s forwards;
+  }
+  .rotate-all-leave{}
+  .rotate-all-leave-active{
+
+  }
+
+  @keyframes rotate-all-animation{
+    from{
+      transform:rotateY(0);
+    }
+    to{
+      transform: rotateY(1080deg);
+    }
+  }
+
+
+  /*! Answer Card */
+  .rotate-enter{}
+  .rotate-enter-active{
+    animation: rotate-in .5s ease-in-out forwards;
+  }
+  .rotate-leave{}
+  .rotate-leave-active{
+    animation: rotate-out .5s ease-in-out forwards;
+  }
+
+  @keyframes rotate-in{
+    from{
+      transform: rotateY(90deg);
+    }
+    to{
+      transform: rotateY(0deg);
+    }
+  }
+
+
+  @keyframes rotate-out{
+    from{
+      transform: rotateY(0deg);
+    }
+    to{
+      transform: rotateY(90deg);
+    }
+  }
+
+</style>
