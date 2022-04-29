@@ -1,6 +1,5 @@
 <template>
   <div class="card">
-    <!-- card icine default seklini css vasitesile yukleyeciyik asagidaki style yerinde background-image:url('image-path') seklinde -->
   </div>
 </template>
 

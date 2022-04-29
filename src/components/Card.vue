@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <img :src="card.image" alt="" /><!-- propsdan gelen datani gostermek ucun yeni hansi attributa tesir edecek bu data hemin attributi active etmek ucun : bindingden istifade olunur -->
+    <img :src="card.image" alt="" />
   </div>
 </template>
 
@@ -16,7 +16,7 @@
     height: 232px;
     border: 1px solid #666;
     border-radius: 5px;
-    transition: box-shadow 1s; /* burdaki transtion kodu hover deactive olanda isleyir */
+    transition: box-shadow 1s;
     margin: auto;
   }
   .card:hover {

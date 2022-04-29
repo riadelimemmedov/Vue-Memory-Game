@@ -41,7 +41,7 @@
     data:function(){
       return{
         selectedCard:null,
-        answer:{},//cunki icinde atayacagim deyer objectdir altdaki card json datasindan gorunduyu kimi
+        answer:{},
         activeCard:'app-default-card',
         cards:[
           {id:1,component:'app-card',image:'/src/assets/card-1.jpg'},
@@ -52,10 +52,9 @@
         ]
       }
     },
-    created(){//seyfe her yenilenende created tetiklenir,window.onload kimi bir seydir => created() hooku vue js de lifecycledir yeni bir qanundur
+    created(){
       let answer_question = Math.ceil(Math.random()*this.cards.length)
       this.answer = this.cards[answer_question-1]
-      //console.log(this.answer.component)
     },
     methods:{
       showCard(answer_card){
@@ -105,8 +104,6 @@
     transition: box-shadow .5s;
   }
 
-  /* Acik kartlarin animasyonlari icin gerekli olan transtion class tanimlari */
-  /* Vue js animtion class default */
   .rotate-all-enter{}
   .rotate-all-enter-active{
     animation: rotate-all-animation ease-in-out 2s forwards;
