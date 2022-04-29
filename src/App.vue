@@ -3,7 +3,7 @@
     <component
       key="mainComponent"
       @activeComponentEvent="activeComponent=$event"
-      :is="activeComponent"><!-- eger dynamic sekilde componentleri istifade etmek isteyirnsense compoentn tagi ve :is den istifade etmelinse birde data propertysine deyisken adi vermelinseki :is ile binding ede bilek componentdi ekrana yeni template tagi icine dynamic bir sekilde -->
+      :is="activeComponent">
     </component>
     <canvas id="canvas" key="canvasComponent" v-show="activeComponent =='app-celebrate'"></canvas>
   </transition-group>
@@ -31,7 +31,7 @@
 
 <style>
 
-  body{/* butun componentlerein css inde olacag bu kod cunki scopped dan istifade olunmadi */
+  body{
     font-family: sans-serif;
   }
 
